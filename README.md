@@ -340,10 +340,6 @@ http://127.0.0.1:8000
 ### Search
 ![Search](./screenshots/search.png.png)
 
-## Repository
+## Live Demo
 
-https://github.com/moudyemellin-dev/TugasWeb-P10-BlogCRUD
-
----
-
-**Tugas Rutin 10 - Pemrograman Web**
+🌐 [Buka Website Tugas Rutin 10 - Blog CRUD Laravel](https://moudy-crud10.infy.click/posts)
