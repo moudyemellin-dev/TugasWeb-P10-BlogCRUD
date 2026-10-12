@@ -1,58 +1,354 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tugas Rutin 10 - Blog CRUD Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Project ini dibuat untuk memenuhi **Tugas Rutin 10 Pemrograman Web** dengan menerapkan CRUD menggunakan Laravel.
 
-## About Laravel
+## Identitas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Nama: Moudy Emellin
+- Mata Kuliah: Pemrograman Web
+- Project: Tugas Rutin 10 - Blog CRUD
+- Framework: Laravel
+- Database: MySQL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- CRUD Post
+- Resource Controller
+- Resource Routing
+- Named Route
+- Blade Layout
+- Blade Components
+- Validation
+- Old Input
+- Flash Message
+- CSRF Protection
+- Method PUT dan DELETE
+- Route Model Binding
+- Pagination
+- Search Post
+- Soft Delete
+- Trash
+- Restore Post
+- Hapus Permanen
+- Upload Gambar
 
-## Learning Laravel
+## Resource Route
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Project menggunakan:
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```php
+Route::resource('posts', PostController::class);
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Route utama yang tersedia:
 
-## Contributing
+| Route | Fungsi |
+|---|---|
+| `posts.index` | Menampilkan daftar post |
+| `posts.create` | Form tambah post |
+| `posts.store` | Menyimpan post |
+| `posts.show` | Detail post |
+| `posts.edit` | Form edit post |
+| `posts.update` | Memperbarui post |
+| `posts.destroy` | Menghapus post |
+| `posts.trash` | Menampilkan trash |
+| `posts.restore` | Restore post |
+| `posts.forceDelete` | Hapus permanen |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## PostController
 
-## Code of Conduct
+Resource Controller memiliki 7 method utama:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```text
+index()
+create()
+store()
+show()
+edit()
+update()
+destroy()
+```
 
-## Security Vulnerabilities
+Method tambahan:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```text
+trash()
+restore()
+forceDelete()
+```
 
-## License
+## Blade Layout
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Project menggunakan master layout:
+
+```text
+resources/views/layouts/app.blade.php
+```
+
+Halaman lain menggunakan:
+
+```php
+@extends('layouts.app')
+```
+
+dan master layout menggunakan:
+
+```php
+@yield('content')
+```
+
+## Blade Components
+
+Project menggunakan minimal dua Blade Component:
+
+```text
+resources/views/components/
+├── alert.blade.php
+└── card.blade.php
+```
+
+### Alert Component
+
+Digunakan untuk menampilkan flash message berhasil atau gagal.
+
+### Card Component
+
+Digunakan sebagai komponen tampilan card pada halaman Blog.
+
+## Validation
+
+Validation digunakan pada proses tambah dan edit post.
+
+Contoh:
+
+```php
+'title' => 'required|max:255',
+'content' => 'required|min:10',
+'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+```
+
+Error ditampilkan per field menggunakan:
+
+```php
+@error('title')
+    {{ $message }}
+@enderror
+```
+
+Input lama dipertahankan menggunakan:
+
+```php
+old('title')
+```
+
+## Security
+
+Semua form menggunakan:
+
+```php
+@csrf
+```
+
+Update menggunakan:
+
+```php
+@method('PUT')
+```
+
+Delete menggunakan:
+
+```php
+@method('DELETE')
+```
+
+## Route Model Binding
+
+Contoh penggunaan Route Model Binding:
+
+```php
+public function show(Post $post)
+public function edit(Post $post)
+public function update(Request $request, Post $post)
+public function destroy(Post $post)
+```
+
+## Pagination
+
+Data post dibatasi 5 data setiap halaman:
+
+```php
+paginate(5)
+```
+
+Sehingga ketika jumlah post lebih dari 5, pagination akan muncul.
+
+## Bonus
+
+### 1. Search
+
+Post dapat dicari berdasarkan judul atau konten.
+
+### 2. Soft Delete
+
+Post yang dihapus tidak langsung hilang permanen, tetapi masuk ke halaman Trash.
+
+Fitur yang tersedia:
+
+```text
+Delete
+Trash
+Restore
+Force Delete
+```
+
+### 3. Image Upload
+
+Post dapat memiliki gambar dengan format:
+
+```text
+jpg
+jpeg
+png
+webp
+```
+
+Gambar disimpan pada storage Laravel.
+
+## Struktur Folder Utama
+
+```text
+TugasWeb-P10-BlogCRUD/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       └── PostController.php
+│   └── Models/
+│       └── Post.php
+├── database/
+│   └── migrations/
+├── public/
+├── resources/
+│   └── views/
+│       ├── components/
+│       │   ├── alert.blade.php
+│       │   └── card.blade.php
+│       ├── layouts/
+│       │   └── app.blade.php
+│       └── posts/
+│           ├── index.blade.php
+│           ├── create.blade.php
+│           ├── edit.blade.php
+│           ├── show.blade.php
+│           └── trash.blade.php
+├── routes/
+│   └── web.php
+├── screenshots/
+├── storage/
+├── .env.example
+├── artisan
+├── composer.json
+└── README.md
+```
+
+## Instalasi Project
+
+1. Clone repository:
+
+```bash
+git clone https://github.com/moudyemellin-dev/TugasWeb-P10-BlogCRUD.git
+```
+
+2. Masuk ke folder:
+
+```bash
+cd TugasWeb-P10-BlogCRUD
+```
+
+3. Install dependency:
+
+```bash
+composer install
+```
+
+4. Copy environment:
+
+```bash
+copy .env.example .env
+```
+
+5. Generate key:
+
+```bash
+php artisan key:generate
+```
+
+6. Buat database:
+
+```text
+blog_crud_db
+```
+
+7. Atur `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=blog_crud_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+8. Jalankan migration:
+
+```bash
+php artisan migrate
+```
+
+9. Buat storage link:
+
+```bash
+php artisan storage:link
+```
+
+10. Jalankan Laravel:
+
+```bash
+php artisan serve
+```
+
+11. Buka:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Screenshot
+
+### Daftar Post
+
+![Daftar Post](screenshots/daftar-post.png)
+
+### Upload Gambar
+
+![Upload Gambar](screenshots/upload-gambar.png)
+
+### Validation
+
+![Validation](screenshots/validation.png)
+
+### Trash
+
+![Trash](screenshots/trash.png)
+
+### Search
+
+![Search](screenshots/search.png)
+
+## Repository
+
+https://github.com/moudyemellin-dev/TugasWeb-P10-BlogCRUD
+
+---
+
+**Tugas Rutin 10 - Pemrograman Web**
