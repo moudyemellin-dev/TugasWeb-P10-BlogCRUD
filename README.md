@@ -326,24 +326,19 @@ http://127.0.0.1:8000
 ## Screenshot
 
 ### Daftar Post
-
-![Daftar Post](screenshots/daftar-post.png)
+![Daftar Post](/screenshots/daftar-post.png.png)
 
 ### Upload Gambar
-
-![Upload Gambar](screenshots/upload-gambar.png)
+![Upload Gambar](./screenshots/upload-gambar.png.png)
 
 ### Validation
-
-![Validation](screenshots/validation.png)
+![Validation](./screenshots/validation.png.png)
 
 ### Trash
-
-![Trash](screenshots/trash.png)
+![Trash](./screenshots/trash.png.png)
 
 ### Search
-
-![Search](screenshots/search.png)
+![Search](./screenshots/search.png.png)
 
 ## Repository
 
